@@ -96,6 +96,47 @@
              -webkit-backdrop-filter: blur(10px);
              border: 1px solid rgba(255, 255, 255, 0.1);
         }
+        
+        /* Pricing Toggle Switch */
+        .pricing-toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        .pricing-toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .pricing-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #374151;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .pricing-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .pricing-slider {
+            background-color: #4F46E5;
+        }
+        input:checked + .pricing-slider:before {
+            transform: translateX(26px);
+        }
 
     </style>
 </head>
@@ -273,46 +314,128 @@
             <div class="container mx-auto px-6">
                 <div class="text-center max-w-3xl mx-auto">
                     <div class="reveal">
-                        <h2 class="text-3xl md:text-4xl font-bold text-white">Pricing That Makes Sense</h2>
-                        <p class="mt-4 text-lg text-gray-400">Start for free. Scale when you're ready. No hidden fees, ever.</p>
-                        <p class="mt-2 text-sm text-indigo-400">All subscriptions and trials are managed directly within the app.</p>
+                        <h2 class="text-3xl md:text-4xl font-bold text-white">Pricing That Scales With You</h2>
+                        <p class="mt-4 text-lg text-gray-400">Start for free. Upgrade as you grow. No hidden fees, ever.</p>
+                        <p class="mt-2 text-sm text-indigo-400">All subscriptions and trials are managed directly within the app after download.</p>
                     </div>
                 </div>
-                <div class="mt-16 max-w-4xl mx-auto grid lg:grid-cols-2 gap-8 items-center">
-                    <div class="reveal reveal-delay-100 glassmorphism p-8 rounded-2xl h-full flex flex-col">
-                        <h3 class="text-2xl font-bold gradient-text">Personal</h3>
-                        <p class="mt-2 text-gray-400">For freelancers, students, and individuals.</p>
-                        <div class="my-8">
-                            <span class="text-5xl font-extrabold text-white">Free</span>
-                        </div>
-                        <ul class="space-y-4 text-gray-300 flex-grow">
-                            <li class="flex items-center"><i class="ph-fill ph-check-circle text-green-400 mr-3"></i>Up to 20 scans / month</li>
-                            <li class="flex items-center"><i class="ph-fill ph-check-circle text-green-400 mr-3"></i>AI-Powered Scanning</li>
-                            <li class="flex items-center"><i class="ph-fill ph-check-circle text-green-400 mr-3"></i>Personal Analytics</li>
-                            <li class="flex items-center"><i class="ph-fill ph-check-circle text-green-400 mr-3"></i>Secure Cloud Storage</li>
-                        </ul>
-                        <a href="https://play.google.com/store/apps/details?id=com.appcraftstudios.slip_scan" target="_blank" rel="noopener noreferrer" class="mt-8 w-full bg-gray-700 hover:bg-gray-600 text-white text-center font-semibold py-3 rounded-lg transition">Download for Free</a>
-                    </div>
+                
+                <!-- Pricing Toggle -->
+                <div class="reveal reveal-delay-100 mt-12 flex justify-center items-center space-x-4">
+                    <span id="monthly-label" class="text-lg font-semibold text-gray-400 transition">Monthly</span>
+                    <label class="pricing-toggle-switch">
+                        <input type="checkbox" id="pricing-toggle">
+                        <span class="pricing-slider"></span>
+                    </label>
+                    <span id="annual-label" class="text-lg font-semibold text-white transition">Annually <span class="text-green-400">(Save up to 50%)</span></span>
+                </div>
 
-                     <div class="reveal reveal-delay-200 bg-indigo-600 p-8 rounded-2xl shadow-2xl shadow-indigo-600/40 transform lg:scale-105 h-full flex flex-col">
-                        <div class="flex justify-between items-center">
-                            <h3 class="text-2xl font-bold text-white">Business</h3>
-                            <span class="bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full">MOST POPULAR</span>
+                <!-- Personal Plans -->
+                <div class="reveal reveal-delay-200 mt-8">
+                    <h3 class="text-2xl font-bold text-center text-white">Personal Plans</h3>
+                    <div class="mt-8 max-w-5xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+                        
+                        <!-- Free Tier -->
+                        <div class="glassmorphism p-8 rounded-2xl h-full flex flex-col">
+                            <h3 class="text-2xl font-bold gradient-text">Free</h3>
+                            <p class="mt-2 text-gray-400">For getting started.</p>
+                            <div class="my-8">
+                                <span class="text-5xl font-extrabold text-white">$0</span>
+                            </div>
+                            <ul class="space-y-4 text-gray-300 flex-grow">
+                                <li class="flex items-center"><i class="ph-fill ph-check-circle text-green-400 mr-3"></i>20 scans total (lifetime)</li>
+                                <li class="flex items-center"><i class="ph-fill ph-check-circle text-green-400 mr-3"></i>AI-Powered Scanning</li>
+                                <li class="flex items-center"><i class="ph-fill ph-check-circle text-green-400 mr-3"></i>Personal Analytics</li>
+                                <li class="flex items-center"><i class="ph-fill ph-check-circle text-green-400 mr-3"></i>Secure Cloud Storage</li>
+                            </ul>
+                            <a href="https://play.google.com/store/apps/details?id=com.appcraftstudios.slip_scan" target="_blank" rel="noopener noreferrer" class="mt-8 w-full bg-gray-700 hover:bg-gray-600 text-white text-center font-semibold py-3 rounded-lg transition">Download for Free</a>
                         </div>
-                        <p class="mt-2 text-indigo-200">For teams and businesses of all sizes.</p>
-                        <div class="my-8">
-                            <span class="text-5xl font-extrabold text-white">$9.99</span>
-                            <span class="text-indigo-200">/ user / month</span>
+
+                        <!-- Plus Tier -->
+                        <div class="glassmorphism p-8 rounded-2xl h-full flex flex-col">
+                            <h3 class="text-2xl font-bold gradient-text">Plus</h3>
+                            <p class="mt-2 text-gray-400">For the power user.</p>
+                            <div class="my-8">
+                                <div class="price-container" data-monthly="$3.99" data-annual="$39.99">
+                                    <span class="price-amount text-5xl font-extrabold text-white">$3.99</span>
+                                    <span class="price-period text-gray-400">/ month</span>
+                                </div>
+                            </div>
+                            <ul class="space-y-4 text-gray-300 flex-grow">
+                                <li class="flex items-center"><i class="ph-fill ph-check-circle text-green-400 mr-3"></i>Everything in Free, plus:</li>
+                                <li class="flex items-center"><i class="ph-fill ph-check-circle text-green-400 mr-3"></i>50 scans per month</li>
+                            </ul>
+                            <a href="https://play.google.com/store/apps/details?id=com.appcraftstudios.slip_scan" target="_blank" rel="noopener noreferrer" class="mt-8 w-full bg-indigo-600 hover:bg-indigo-700 text-white text-center font-semibold py-3 rounded-lg transition">Get Started</a>
                         </div>
-                        <ul class="space-y-4 text-indigo-100 flex-grow">
-                            <li class="flex items-center"><i class="ph-fill ph-check-circle text-white mr-3"></i>Everything in Personal, plus:</li>
-                            <li class="flex items-center"><i class="ph-fill ph-check-circle text-white mr-3"></i>Unlimited Scans</li>
-                            <li class="flex items-center"><i class="ph-fill ph-check-circle text-white mr-3"></i>Team Management & Roles</li>
-                            <li class="flex items-center"><i class="ph-fill ph-check-circle text-white mr-3"></i>Approval Workflows</li>
-                             <li class="flex items-center"><i class="ph-fill ph-check-circle text-white mr-3"></i>Xero Integration</li>
-                        </ul>
-                        <a href="https://play.google.com/store/apps/details?id=com.appcraftstudios.slip_scan" target="_blank" rel="noopener noreferrer" class="mt-8 w-full bg-white hover:bg-gray-200 text-indigo-600 text-center font-bold py-3 rounded-lg transition">Download & Start Trial</a>
+                        
+                        <!-- Pro Tier (Highlighted) -->
+                         <div class="bg-indigo-600 p-8 rounded-2xl shadow-2xl shadow-indigo-600/40 transform md:scale-105 h-full flex flex-col">
+                            <div class="flex justify-between items-center">
+                                <h3 class="text-2xl font-bold text-white">Pro</h3>
+                                <span class="bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full">RECOMMENDED</span>
+                            </div>
+                            <p class="mt-2 text-indigo-200">For unlimited potential.</p>
+                            <div class="my-8">
+                                <div class="price-container" data-monthly="$9.99" data-annual="$59.99">
+                                    <span class="price-amount text-5xl font-extrabold text-white">$9.99</span>
+                                    <span class="price-period text-indigo-200">/ month</span>
+                                </div>
+                            </div>
+                            <ul class="space-y-4 text-indigo-100 flex-grow">
+                                <li class="flex items-center"><i class="ph-fill ph-check-circle text-white mr-3"></i>Everything in Plus, plus:</li>
+                                <li class="flex items-center"><i class="ph-fill ph-check-circle text-white mr-3"></i>Unlimited Scanning</li>
+                            </ul>
+                            <a href="https://play.google.com/store/apps/details?id=com.appcraftstudios.slip_scan" target="_blank" rel="noopener noreferrer" class="mt-8 w-full bg-white hover:bg-gray-200 text-indigo-600 text-center font-bold py-3 rounded-lg transition">Get Started</a>
+                        </div>
                     </div>
+                </div>
+                
+                <!-- Business Plans -->
+                <div class="reveal reveal-delay-300 mt-20">
+                     <h3 class="text-2xl font-bold text-center text-white">Business Plans</h3>
+                     <div class="mt-8 max-w-4xl mx-auto grid lg:grid-cols-2 gap-8 items-stretch">
+                        <!-- Business Tier (Highlighted) -->
+                        <div class="bg-indigo-600 p-8 rounded-2xl shadow-2xl shadow-indigo-600/40 transform lg:scale-105 h-full flex flex-col">
+                            <div class="flex justify-between items-center">
+                                <h3 class="text-2xl font-bold text-white">Business</h3>
+                                <span class="bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full">MOST POPULAR</span>
+                            </div>
+                            <p class="mt-2 text-indigo-200">For growing teams.</p>
+                            <div class="my-8">
+                                <div class="price-container" data-monthly="$23.99" data-annual="$224.99">
+                                    <span class="price-amount text-5xl font-extrabold text-white">$23.99</span>
+                                    <span class="price-period text-indigo-200">/ month</span>
+                                </div>
+                            </div>
+                            <ul class="space-y-4 text-indigo-100 flex-grow">
+                                <li class="flex items-center"><i class="ph-fill ph-check-circle text-white mr-3"></i>All Pro features, plus:</li>
+                                <li class="flex items-center"><i class="ph-fill ph-check-circle text-white mr-3"></i>Up to 10 users</li>
+                                <li class="flex items-center"><i class="ph-fill ph-check-circle text-white mr-3"></i>Team Management & Roles</li>
+                                <li class="flex items-center"><i class="ph-fill ph-check-circle text-white mr-3"></i>Approval Workflows</li>
+                                <li class="flex items-center"><i class="ph-fill ph-check-circle text-white mr-3"></i>Xero Integration</li>
+                            </ul>
+                            <a href="https://play.google.com/store/apps/details?id=com.appcraftstudios.slip_scan" target="_blank" rel="noopener noreferrer" class="mt-8 w-full bg-white hover:bg-gray-200 text-indigo-600 text-center font-bold py-3 rounded-lg transition">Download & Start Trial</a>
+                        </div>
+
+                        <!-- Enterprise Tier -->
+                        <div class="glassmorphism p-8 rounded-2xl h-full flex flex-col">
+                            <h3 class="text-2xl font-bold gradient-text">Enterprise</h3>
+                            <p class="mt-2 text-gray-400">For large-scale operations.</p>
+                            <div class="my-8">
+                                <div class="price-container" data-monthly="$84.99" data-annual="$444.99">
+                                    <span class="price-amount text-5xl font-extrabold text-white">$84.99</span>
+                                    <span class="price-period text-gray-400">/ month</span>
+                                </div>
+                            </div>
+                            <ul class="space-y-4 text-gray-300 flex-grow">
+                                <li class="flex items-center"><i class="ph-fill ph-check-circle text-green-400 mr-3"></i>All Business features, plus:</li>
+                                <li class="flex items-center"><i class="ph-fill ph-check-circle text-green-400 mr-3"></i>Unlimited Users</li>
+                                <li class="flex items-center"><i class="ph-fill ph-check-circle text-green-400 mr-3"></i>Priority Support</li>
+                                <li class="flex items-center"><i class="ph-fill ph-check-circle text-green-400 mr-3"></i>Dedicated Account Manager</li>
+                            </ul>
+                             <a href="https://play.google.com/store/apps/details?id=com.appcraftstudios.slip_scan" target="_blank" rel="noopener noreferrer" class="mt-8 w-full bg-gray-700 hover:bg-gray-600 text-white text-center font-semibold py-3 rounded-lg transition">Download & Inquire</a>
+                        </div>
+                     </div>
                 </div>
             </div>
         </section>
@@ -442,8 +565,46 @@
                 contentPersonal.classList.add('active');
                 contentBusiness.classList.remove('active');
             });
+
+            // --- Pricing Toggle Logic ---
+            const pricingToggle = document.getElementById('pricing-toggle');
+            const priceContainers = document.querySelectorAll('.price-container');
+            const monthlyLabel = document.getElementById('monthly-label');
+            const annualLabel = document.getElementById('annual-label');
+
+            pricingToggle.addEventListener('change', (event) => {
+                const isAnnual = event.target.checked;
+
+                if (isAnnual) {
+                    monthlyLabel.classList.remove('text-white');
+                    monthlyLabel.classList.add('text-gray-400');
+                    annualLabel.classList.add('text-white');
+                    annualLabel.classList.remove('text-gray-400');
+                } else {
+                    monthlyLabel.classList.add('text-white');
+                    monthlyLabel.classList.remove('text-gray-400');
+                    annualLabel.classList.remove('text-white');
+                    annualLabel.classList.add('text-gray-400');
+                }
+
+                priceContainers.forEach(container => {
+                    const amountEl = container.querySelector('.price-amount');
+                    const periodEl = container.querySelector('.price-period');
+                    
+                    if (isAnnual) {
+                        amountEl.textContent = container.dataset.annual;
+                        periodEl.textContent = '/ year';
+                    } else {
+                        amountEl.textContent = container.dataset.monthly;
+                        periodEl.textContent = '/ month';
+                    }
+                });
+            });
+
+            // Set initial state of labels
+            monthlyLabel.classList.add('text-white');
+            annualLabel.classList.add('text-gray-400');
         });
     </script>
 </body>
 </html>
-
