@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slip-Scan | For Every Receipt, For Every Team</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <style>
+        /* Custom Styles & Animations */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0B0F19;
+            color: #E0E0E0;
+        }
+
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(90deg, #4F46E5, #A855F7, #EC4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Hero Background Gradient */
+        .hero-gradient {
+            background-image: radial-gradient(circle at 50% 0%, rgba(79, 70, 229, 0.2) 0%, rgba(11, 15, 25, 0) 40%);
+        }
+
+        /* Scroll-triggered animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom animation delays */
+        .reveal-delay-100 { transition-delay: 100ms; }
+        .reveal-delay-200 { transition-delay: 200ms; }
+        .reveal-delay-300 { transition-delay: 300ms; }
+        .reveal-delay-400 { transition-delay: 400ms; }
+        .reveal-delay-500 { transition-delay: 500ms; }
+
+        /* Floating Animation for Hero Image */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Feature Tabs */
+        .feature-tab {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-tab.active {
+            background-color: #4F46E5;
+            color: #FFF;
+        }
+
+        .feature-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .feature-content.active {
+            display: grid;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Glassmorphism effect */
+        .glassmorphism {
+             background: rgba(255, 255, 255, 0.05);
+             backdrop-filter: blur(10px);
+             -webkit-backdrop-filter: blur(10px);
+             border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <!-- Header -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-indigo-500">
+                        <path d="M14 3.00002L4 3.00002C3.44772 3.00002 3 3.44774 3 4.00002V20C3 20.5523 3.44772 21 4 21H20C20.5523 21 21 20.5523 21 20V9.00002L14 3.00002Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M14 3V9H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 12L8 16L12 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M16 12L20 16L16 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span class="text-xl font-bold text-white">Slip-Scan</span>
+                </div>
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#features" class="text-gray-300 hover:text-white transition">Features</a>
+                    <a href="#how-it-works" class="text-gray-300 hover:text-white transition">How It Works</a>
+                    <a href="#pricing" class="text-gray-300 hover:text-white transition">Pricing</a>
+                </nav>
+                <div class="hidden md:flex items-center space-x-4">
+                    <button class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-5 rounded-lg transition duration-300 shadow-lg shadow-indigo-600/30">Get Started</button>
+                </div>
+                <button id="mobile-menu-btn" class="md:hidden text-white">
+                    <i class="ph-bold ph-list text-3xl"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-[#101522]/90 backdrop-blur-sm">
+             <nav class="flex flex-col items-center space-y-4 p-6">
+                <a href="#features" class="text-gray-300 hover:text-white transition">Features</a>
+                <a href="#how-it-works" class="text-gray-300 hover:text-white transition">How It Works</a>
+                <a href="#pricing" class="text-gray-300 hover:text-white transition">Pricing</a>
+                <button class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-6 rounded-lg transition duration-300 shadow-lg shadow-indigo-600/30 w-full mt-4">Get Started</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="relative pt-32 pb-20 md:pt-48 md:pb-32 hero-gradient overflow-hidden">
+            <div class="container mx-auto px-6 text-center">
+                <div class="reveal">
+                    <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight">
+                        For Every Receipt,<br>
+                        <span class="gradient-text">For Every Team.</span>
+                    </h1>
+                </div>
+                <div class="reveal reveal-delay-100">
+                    <p class="mt-6 max-w-2xl mx-auto text-lg md:text-xl text-gray-300">
+                        The AI-powered scanner for personal expenses & the complete management platform for your business. Unmatched accuracy, team workflows, and powerful insights.
+                    </p>
+                </div>
+                <div class="reveal reveal-delay-200 mt-10 flex flex-col sm:flex-row justify-center items-center gap-4">
+                     <a href="https://play.google.com/store/apps/details?id=com.appcraftstudios.slip_scan" target="_blank" rel="noopener noreferrer" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-8 rounded-lg transition duration-300 shadow-lg shadow-indigo-600/30 flex items-center space-x-2 w-full sm:w-auto">
+                        <i class="ph-bold ph-google-play-logo text-2xl"></i>
+                        <span>Google Play</span>
+                    </a>
+                    <a class="bg-gray-700 text-white font-semibold py-3 px-8 rounded-lg flex items-center space-x-2 w-full sm:w-auto opacity-50 cursor-not-allowed">
+                        <i class="ph-bold ph-apple-logo text-2xl"></i>
+                        <span>Coming Soon</span>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-20 reveal reveal-delay-300">
+                <div class="relative w-full flex justify-center">
+                    <img src="https://placehold.co/1200x675/0B0F19/FFFFFF?text=Slip-Scan+Dashboard" alt="Slip-Scan App Dashboard" class="w-[90%] max-w-4xl rounded-2xl shadow-2xl shadow-indigo-900/40 float-animation border-2 border-indigo-900/50">
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="py-20 md:py-32">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <div class="reveal">
+                        <h2 class="text-3xl md:text-4xl font-bold text-white">One App. <span class="gradient-text">Two Powerful Experiences.</span></h2>
+                        <p class="mt-4 text-lg text-gray-400">Whether you're managing your own finances or an entire team's, Slip-Scan adapts to your needs.</p>
+                    </div>
+                </div>
+
+                <!-- Feature Tabs -->
+                <div class="reveal reveal-delay-100 mt-12 max-w-lg mx-auto bg-gray-900/50 p-2 rounded-xl flex space-x-2">
+                    <button id="tab-business" class="feature-tab active w-1/2 py-3 px-4 text-center font-semibold rounded-lg">For Your Business</button>
+                    <button id="tab-personal" class="feature-tab w-1/2 py-3 px-4 text-center font-semibold rounded-lg">For You</button>
+                </div>
+
+                <!-- Business Features -->
+                <div id="content-business" class="feature-content active mt-12 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                    <div class="reveal reveal-delay-100 glassmorphism p-8 rounded-2xl">
+                        <i class="ph-bold ph-users-three text-4xl text-indigo-400"></i>
+                        <h3 class="mt-4 text-xl font-bold text-white">Team Management</h3>
+                        <p class="mt-2 text-gray-400">Assign Owner, Manager, and Employee roles. Control permissions and build your company's financial hierarchy.</p>
+                    </div>
+                    <div class="reveal reveal-delay-200 glassmorphism p-8 rounded-2xl mt-8 md:mt-0">
+                        <i class="ph-bold ph-check-square-offset text-4xl text-green-400"></i>
+                        <h3 class="mt-4 text-xl font-bold text-white">Approval Workflows</h3>
+                        <p class="mt-2 text-gray-400">Employees submit expenses for managers to approve. Owners get final oversight, ensuring full control.</p>
+                    </div>
+                    <div class="reveal reveal-delay-300 glassmorphism p-8 rounded-2xl mt-8 lg:mt-0">
+                         <i class="ph-bold ph-arrows-clockwise text-4xl text-sky-400"></i>
+                        <h3 class="mt-4 text-xl font-bold text-white">Xero Integration</h3>
+                        <p class="mt-2 text-gray-400">Push approved invoices and receipts directly to Xero, streamlining your accounting and saving hours.</p>
+                    </div>
+                </div>
+
+                <!-- Personal Features -->
+                <div id="content-personal" class="feature-content mt-12 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                    <div class="glassmorphism p-8 rounded-2xl">
+                        <i class="ph-bold ph-scan text-4xl text-purple-400"></i>
+                        <h3 class="mt-4 text-xl font-bold text-white">AI-Powered Scanning</h3>
+                        <p class="mt-2 text-gray-400">Capture every detail with pinpoint accuracy. Our AI digitizes totals, vendors, and all line items flawlessly.</p>
+                    </div>
+                    <div class="glassmorphism p-8 rounded-2xl mt-8 md:mt-0">
+                         <i class="ph-bold ph-chart-pie-slice text-4xl text-pink-400"></i>
+                        <h3 class="mt-4 text-xl font-bold text-white">Insightful Analytics</h3>
+                        <p class="mt-2 text-gray-400">Visualize your spending habits with beautiful charts. Understand where your money goes and budget smarter.</p>
+                    </div>
+                    <div class="glassmorphism p-8 rounded-2xl mt-8 lg:mt-0">
+                        <i class="ph-bold ph-cloud-arrow-up text-4xl text-amber-400"></i>
+                        <h3 class="mt-4 text-xl font-bold text-white">Secure Cloud Storage</h3>
+                        <p class="mt-2 text-gray-400">Every receipt is automatically saved and organized in a secure cloud gallery, ready for tax time.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How it Works Section -->
+        <section id="how-it-works" class="py-20 md:py-32 bg-gray-900/30">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <div class="reveal">
+                        <h2 class="text-3xl md:text-4xl font-bold text-white">Get Started in <span class="gradient-text">Three Simple Steps</span></h2>
+                        <p class="mt-4 text-lg text-gray-400">From chaos to clarity, faster than you can make a coffee.</p>
+                    </div>
+                </div>
+                <div class="mt-20 grid md:grid-cols-3 gap-12 text-center relative">
+                    <!-- Dashed line connector -->
+                    <div class="hidden md:block absolute top-1/2 left-0 w-full h-px -translate-y-12">
+                        <svg width="100%" height="2" class="text-gray-700">
+                           <line x1="0" y1="1" x2="100%" y2="1" stroke="currentColor" stroke-width="2" stroke-dasharray="8 8" />
+                        </svg>
+                    </div>
+                    <div class="reveal reveal-delay-100 relative">
+                        <div class="w-24 h-24 mx-auto flex items-center justify-center rounded-full bg-indigo-900/50 border-2 border-indigo-700 text-indigo-400 shadow-lg">
+                           <i class="ph-bold ph-camera text-4xl"></i>
+                        </div>
+                        <h3 class="mt-6 text-xl font-bold text-white">1. Scan Anything</h3>
+                        <p class="mt-2 text-gray-400">Snap a photo of any receipt or invoice. Our AI gets to work instantly, capturing every detail.</p>
+                    </div>
+                    <div class="reveal reveal-delay-200 relative">
+                        <div class="w-24 h-24 mx-auto flex items-center justify-center rounded-full bg-indigo-900/50 border-2 border-indigo-700 text-indigo-400 shadow-lg">
+                            <i class="ph-bold ph-rocket-launch text-4xl"></i>
+                        </div>
+                        <h3 class="mt-6 text-xl font-bold text-white">2. Submit & Approve</h3>
+                        <p class="mt-2 text-gray-400">If you're on a team, submit for approval. If it's personal, it's saved. Simple as that.</p>
+                    </div>
+                    <div class="reveal reveal-delay-300 relative">
+                         <div class="w-24 h-24 mx-auto flex items-center justify-center rounded-full bg-indigo-900/50 border-2 border-indigo-700 text-indigo-400 shadow-lg">
+                           <i class="ph-bold ph-chart-line-up text-4xl"></i>
+                        </div>
+                        <h3 class="mt-6 text-xl font-bold text-white">3. Analyse & Export</h3>
+                        <p class="mt-2 text-gray-400">View your data in beautiful charts, generate reports, or sync directly to Xero.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section id="pricing" class="py-20 md:py-32">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <div class="reveal">
+                        <h2 class="text-3xl md:text-4xl font-bold text-white">Pricing That Makes Sense</h2>
+                        <p class="mt-4 text-lg text-gray-400">Start for free. Scale when you're ready. No hidden fees, ever.</p>
+                        <p class="mt-2 text-sm text-indigo-400">All subscriptions and trials are managed directly within the app.</p>
+                    </div>
+                </div>
+                <div class="mt-16 max-w-4xl mx-auto grid lg:grid-cols-2 gap-8 items-center">
+                    <div class="reveal reveal-delay-100 glassmorphism p-8 rounded-2xl h-full flex flex-col">
+                        <h3 class="text-2xl font-bold gradient-text">Personal</h3>
+                        <p class="mt-2 text-gray-400">For freelancers, students, and individuals.</p>
+                        <div class="my-8">
+                            <span class="text-5xl font-extrabold text-white">Free</span>
+                        </div>
+                        <ul class="space-y-4 text-gray-300 flex-grow">
+                            <li class="flex items-center"><i class="ph-fill ph-check-circle text-green-400 mr-3"></i>Up to 20 scans / month</li>
+                            <li class="flex items-center"><i class="ph-fill ph-check-circle text-green-400 mr-3"></i>AI-Powered Scanning</li>
+                            <li class="flex items-center"><i class="ph-fill ph-check-circle text-green-400 mr-3"></i>Personal Analytics</li>
+                            <li class="flex items-center"><i class="ph-fill ph-check-circle text-green-400 mr-3"></i>Secure Cloud Storage</li>
+                        </ul>
+                        <a href="https://play.google.com/store/apps/details?id=com.appcraftstudios.slip_scan" target="_blank" rel="noopener noreferrer" class="mt-8 w-full bg-gray-700 hover:bg-gray-600 text-white text-center font-semibold py-3 rounded-lg transition">Download for Free</a>
+                    </div>
+
+                     <div class="reveal reveal-delay-200 bg-indigo-600 p-8 rounded-2xl shadow-2xl shadow-indigo-600/40 transform lg:scale-105 h-full flex flex-col">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-2xl font-bold text-white">Business</h3>
+                            <span class="bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full">MOST POPULAR</span>
+                        </div>
+                        <p class="mt-2 text-indigo-200">For teams and businesses of all sizes.</p>
+                        <div class="my-8">
+                            <span class="text-5xl font-extrabold text-white">$9.99</span>
+                            <span class="text-indigo-200">/ user / month</span>
+                        </div>
+                        <ul class="space-y-4 text-indigo-100 flex-grow">
+                            <li class="flex items-center"><i class="ph-fill ph-check-circle text-white mr-3"></i>Everything in Personal, plus:</li>
+                            <li class="flex items-center"><i class="ph-fill ph-check-circle text-white mr-3"></i>Unlimited Scans</li>
+                            <li class="flex items-center"><i class="ph-fill ph-check-circle text-white mr-3"></i>Team Management & Roles</li>
+                            <li class="flex items-center"><i class="ph-fill ph-check-circle text-white mr-3"></i>Approval Workflows</li>
+                             <li class="flex items-center"><i class="ph-fill ph-check-circle text-white mr-3"></i>Xero Integration</li>
+                        </ul>
+                        <a href="https://play.google.com/store/apps/details?id=com.appcraftstudios.slip_scan" target="_blank" rel="noopener noreferrer" class="mt-8 w-full bg-white hover:bg-gray-200 text-indigo-600 text-center font-bold py-3 rounded-lg transition">Download & Start Trial</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="py-20 md:py-32">
+            <div class="container mx-auto px-6 text-center">
+                <div class="reveal">
+                    <h2 class="text-3xl md:text-5xl font-extrabold text-white">Ready to Take Control?</h2>
+                    <p class="mt-6 max-w-2xl mx-auto text-lg md:text-xl text-gray-300">
+                        Stop chasing paper and start making smarter decisions. Download Slip-Scan today and transform your financial admin forever.
+                    </p>
+                    <div class="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4">
+                         <a href="https://play.google.com/store/apps/details?id=com.appcraftstudios.slip_scan" target="_blank" rel="noopener noreferrer" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-8 rounded-lg transition duration-300 shadow-lg shadow-indigo-600/30 flex items-center space-x-2 w-full sm:w-auto">
+                            <i class="ph-bold ph-google-play-logo text-2xl"></i>
+                            <span>Google Play</span>
+                        </a>
+                        <a class="bg-gray-700 text-white font-semibold py-3 px-8 rounded-lg flex items-center space-x-2 w-full sm:w-auto opacity-50 cursor-not-allowed">
+                            <i class="ph-bold ph-apple-logo text-2xl"></i>
+                            <span>Coming Soon</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900/30 border-t border-gray-800">
+        <div class="container mx-auto px-6 py-12">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div>
+                    <div class="flex items-center space-x-3">
+                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="text-indigo-500">
+                            <path d="M14 3.00002L4 3.00002C3.44772 3.00002 3 3.44774 3 4.00002V20C3 20.5523 3.44772 21 4 21H20C20.5523 21 21 20.5523 21 20V9.00002L14 3.00002Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M14 3V9H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 12L8 16L12 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M16 12L20 16L16 20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span class="text-lg font-bold text-white">Slip-Scan</span>
+                    </div>
+                    <p class="mt-4 text-gray-400">For every receipt, for every team.</p>
+                </div>
+                <div class="grid grid-cols-2 md:col-span-2 gap-8">
+                    <div>
+                        <h4 class="font-semibold text-white">Product</h4>
+                        <ul class="mt-4 space-y-2">
+                            <li><a href="#features" class="text-gray-400 hover:text-white">Features</a></li>
+                            <li><a href="#pricing" class="text-gray-400 hover:text-white">Pricing</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white">Updates</a></li>
+                        </ul>
+                    </div>
+                     <div>
+                        <h4 class="font-semibold text-white">Company</h4>
+                        <ul class="mt-4 space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white">Contact</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12 border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500">&copy; 2025 Slip-Scan by AppCraft Studios. All rights reserved.</p>
+                <div class="flex space-x-4 mt-4 md:mt-0">
+                    <a href="#" class="text-gray-500 hover:text-white"><i class="ph-bold ph-linkedin-logo text-2xl"></i></a>
+                    <a href="#" class="text-gray-500 hover:text-white"><i class="ph-bold ph-facebook-logo text-2xl"></i></a>
+                    <a href="#" class="text-gray-500 hover:text-white"><i class="ph-bold ph-instagram-logo text-2xl"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        // JavaScript for interactivity and animations
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- Scroll Animations ---
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            const elementsToReveal = document.querySelectorAll('.reveal');
+            elementsToReveal.forEach(el => observer.observe(el));
+
+            // --- Header background on scroll ---
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('bg-[#0B0F19]/80', 'backdrop-blur-lg', 'shadow-lg');
+                } else {
+                    header.classList.remove('bg-[#0B0F19]/80', 'backdrop-blur-lg', 'shadow-lg');
+                }
+            });
+
+            // --- Mobile Menu Toggle ---
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // --- Feature Tabs ---
+            const tabBusiness = document.getElementById('tab-business');
+            const tabPersonal = document.getElementById('tab-personal');
+            const contentBusiness = document.getElementById('content-business');
+            const contentPersonal = document.getElementById('content-personal');
+
+            tabBusiness.addEventListener('click', () => {
+                tabBusiness.classList.add('active');
+                tabPersonal.classList.remove('active');
+                contentBusiness.classList.add('active');
+                contentPersonal.classList.remove('active');
+            });
+
+            tabPersonal.addEventListener('click', () => {
+                tabPersonal.classList.add('active');
+                tabBusiness.classList.remove('active');
+                contentPersonal.classList.add('active');
+                contentBusiness.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
+
